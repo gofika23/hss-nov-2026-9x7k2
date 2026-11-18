@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090909">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="description" content="En kväll. Ett band. Pustervik.">
+  <title>HSS — See You In Hell</title>
+  <link rel="preconnect" href="https://www.youtube.com">
+  <link rel="preconnect" href="https://www.google.com">
+  <style>
+    :root { color-scheme: dark; --red:#e21b2d; --white:#f3eee8; --muted:#a7a09a; }
+    * { box-sizing:border-box; }
+    html,body { margin:0; width:100%; min-height:100%; background:#080808; color:var(--white); font-family:Arial,Helvetica,sans-serif; }
+    body { overflow:hidden; }
+    button,input { font:inherit; }
+    .screen { position:fixed; inset:0; min-height:100svh; overflow:hidden; background:
+      radial-gradient(ellipse at 50% 55%, rgba(108,8,18,.35), transparent 48%),
+      linear-gradient(130deg,#090909 0%,#161313 48%,#050505 100%); }
+    .grain { position:absolute; inset:-50%; opacity:.11; pointer-events:none; z-index:8; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E"); animation:grain .24s steps(2) infinite; }
+    @keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(2%,-1%)} 50%{transform:translate(-1%,2%)} 75%{transform:translate(1%,1%)} 100%{transform:translate(-2%,-1%)} }
+    .vignette { position:absolute; inset:0; z-index:5; pointer-events:none; background:radial-gradient(ellipse at center,transparent 35%,rgba(0,0,0,.82) 100%); }
+    .intro,.ending { position:absolute; z-index:10; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:26px 22px; transition:opacity .7s ease, transform .7s ease; }
+    .eyebrow { font-size:11px; letter-spacing:.42em; color:#c5b9b1; text-transform:uppercase; }
+    h1 { margin:17px 0 8px; font-weight:1000; font-stretch:condensed; letter-spacing:-.055em; line-height:.86; text-transform:uppercase; font-size:clamp(44px,11vw,92px); text-shadow:4px 4px 0 #650813, 0 0 32px rgba(226,27,45,.28); }
+    h1 span { color:var(--red); display:block; }
+    .intro-sub { color:#c9c1bc; font-size:12px; letter-spacing:.18em; margin:16px 0 22px; text-transform:uppercase; }
+    .amp { width:230px; max-width:76vw; padding:16px 18px 14px; background:linear-gradient(145deg,#242323,#0d0d0d); border:2px solid #55504c; border-radius:8px; box-shadow:0 12px 35px #000, inset 0 1px 0 #777; }
+    .amp-top { display:flex; justify-content:space-between; color:#bdb3aa; font-size:9px; letter-spacing:.18em; }
+    .dial-wrap { margin:13px auto 8px; width:96px; height:96px; border-radius:50%; padding:8px; background:repeating-conic-gradient(#777 0deg 2deg,#222 2deg 8deg); box-shadow:0 0 0 3px #111,0 0 0 5px #666,0 7px 16px #000; }
+    .dial { width:100%; height:100%; border-radius:50%; position:relative; background:radial-gradient(circle at 35% 28%,#777,#252525 56%,#101010 72%); border:2px solid #888; transform:rotate(0deg); transition:transform .25s; }
+    .dial:before { content:""; position:absolute; width:4px; height:25px; top:7px; left:calc(50% - 2px); border-radius:4px; background:#eee; box-shadow:0 0 7px #fff; }
+    .dial:after { content:"HSS"; position:absolute; inset:0; display:grid; place-items:center; font-weight:900; font-size:15px; letter-spacing:.1em; color:#c9c0b9; }
+    .dial-scale { display:flex; justify-content:space-between; color:#a9a09a; font-size:9px; letter-spacing:.12em; }
+    .volume-input { width:100%; margin:11px 0 2px; accent-color:var(--red); }
+    .warning { margin:17px 0 21px; max-width:350px; color:#d4cbc5; font-size:12px; line-height:1.55; }
+    .warning strong { color:#fff; }
+    .cta { border:1px solid #ff5260; background:linear-gradient(180deg,#d91b2e,#8d0b1b); color:#fff; padding:16px 28px; min-width:220px; font-weight:900; letter-spacing:.14em; text-transform:uppercase; box-shadow:0 0 25px rgba(226,27,45,.24),inset 0 1px rgba(255,255,255,.25); cursor:pointer; }
+    .cta:active { transform:scale(.98); }
+    .tiny { color:#766e68; font-size:9px; letter-spacing:.2em; margin-top:15px; }
+    .trailer { position:absolute; inset:0; opacity:0; transition:opacity .8s; background:#000; }
+    .trailer.active { opacity:1; }
+    #player { position:absolute; inset:0; width:100%; height:100%; }
+    #player iframe { width:100%; height:100%; }
+    .video-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(0deg,rgba(0,0,0,.84),transparent 42%,rgba(0,0,0,.35)); }
+    .trailer-copy { position:absolute; z-index:3; inset:0; display:flex; flex-direction:column; justify-content:space-between; padding: max(28px,env(safe-area-inset-top)) 24px max(28px,env(safe-area-inset-bottom)); pointer-events:none; }
+    .topline { display:flex; justify-content:space-between; align-items:center; font-size:10px; letter-spacing:.25em; color:#eee; text-transform:uppercase; }
+    .topline b { color:var(--red); }
+    .middle { text-align:center; align-self:center; margin-top:auto; margin-bottom:auto; }
+    .middle .stamp { display:inline-block; border:1px solid rgba(255,255,255,.55); padding:8px 13px; transform:rotate(-3deg); font-size:10px; letter-spacing:.3em; }
+    .middle h2 { font-size:clamp(36px,10vw,84px); line-height:.88; letter-spacing:-.06em; margin:19px 0; text-transform:uppercase; text-shadow:3px 3px 0 #790b18; }
+    .middle h2 em { color:var(--red); font-style:normal; }
+    .track { color:#ddd; font-size:10px; letter-spacing:.3em; text-transform:uppercase; }
+    .bottomline { display:flex; align-items:end; justify-content:space-between; gap:15px; color:#d8d0ca; font-size:10px; letter-spacing:.16em; text-transform:uppercase; }
+    .progress { width:90px; height:2px; background:#54494a; margin-top:9px; }
+    .progress i { display:block; height:100%; width:0; background:var(--red); }
+    .ending { opacity:0; pointer-events:none; transform:scale(1.04); background:radial-gradient(ellipse at center,rgba(130,7,22,.44),transparent 65%); }
+    .ending.active { opacity:1; pointer-events:auto; transform:scale(1); }
+    .ticket { width:min(440px,94vw); border:1px solid #b8aaa1; padding:27px 20px 24px; position:relative; background:linear-gradient(135deg,rgba(20,18,18,.96),rgba(5,5,5,.96)); box-shadow:0 15px 55px #000,0 0 45px rgba(226,27,45,.16); }
+    .ticket:before,.ticket:after { content:""; position:absolute; top:50%; width:20px; height:20px; border-radius:50%; background:#080808; border:1px solid #81756e; transform:translateY(-50%); }
+    .ticket:before { left:-11px; border-left:0; }.ticket:after { right:-11px; border-right:0; }
+    .ticket .see { font-size:clamp(32px,8vw,55px); line-height:.88; font-weight:1000; letter-spacing:-.05em; }
+    .ticket .see span { color:var(--red); display:block; }
+    .ticket .rule { height:1px; background:linear-gradient(90deg,transparent,#b7aaa1,transparent); margin:20px 0; }
+    .ticket .venue { font-weight:900; font-size:24px; letter-spacing:.14em; }
+    .ticket .city { color:#b9aaa1; font-size:11px; letter-spacing:.3em; margin-top:5px; }
+    .ticket .date { font-size:16px; font-weight:900; letter-spacing:.13em; margin-top:21px; }
+    .ticket .time { color:#d0c7c0; font-size:12px; letter-spacing:.1em; margin-top:9px; }
+    .ticket .barcode { margin:22px auto 0; width:170px; height:28px; opacity:.65; background:repeating-linear-gradient(90deg,#eee 0 2px,transparent 2px 4px,#eee 4px 5px,transparent 5px 9px); }
+    .replay { margin-top:22px; background:transparent; border:1px solid #6e6260; color:#eee; padding:11px 20px; font-size:10px; letter-spacing:.2em; cursor:pointer; }
+    .yt-fallback { display:none; position:absolute; z-index:15; left:50%; bottom:24px; transform:translateX(-50%); color:white; background:#a00d20; border:0; padding:12px 18px; text-decoration:none; font-size:11px; letter-spacing:.1em; white-space:nowrap; }
+    .yt-fallback.show { display:block; }
+    @media (max-height:700px) { .amp { transform:scale(.82); margin:-7px 0; } .warning{margin:8px 0 12px;} .intro-sub{margin:10px 0 13px;} h1{font-size:clamp(40px,9vw,68px);} }
+  </style>
+</head>
+<body>
+  <main class="screen">
+    <div class="trailer" id="trailer">
+      <div id="player"></div>
+      <div class="video-shade"></div>
+      <div class="trailer-copy">
+        <div class="topline"><span>HARDCORE <b>SUPERSTAR</b></span><span>GÖTEBORG · 2026</span></div>
+        <div class="middle">
+          <div class="stamp" id="stamp">ONE NIGHT ONLY</div>
+          <h2 id="headline">TURN IT<br><em>UP.</em></h2>
+          <div class="track" id="track">DREAMIN' IN A CASKET</div>
+        </div>
+        <div class="bottomline">
+          <div><span id="scene">THE NIGHT IS OURS</span><div class="progress"><i id="bar"></i></div></div>
+          <span>19.11.26</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="intro" id="intro">
+      <div class="eyebrow">GÖTEBORG · 19 NOVEMBER 2026</div>
+      <h1>SKRUVA UPP<span>VOLYMEN!</span></h1>
+      <div class="intro-sub">THIS IS NOT A DRILL</div>
+      <div class="amp">
+        <div class="amp-top"><span>HAGSTRÖM STYLE</span><span>VOLUME</span></div>
+        <div class="dial-wrap"><div class="dial" id="dial"></div></div>
+        <div class="dial-scale"><span>0</span><span>5</span><span>10</span></div>
+        <input class="volume-input" id="volume" type="range" min="0" max="10" value="7" aria-label="Volymratt – visuell effekt">
+        <div class="amp-top"><span>MASTER</span><span id="volvalue">7 / 10</span></div>
+      </div>
+      <p class="warning"><strong>VIKTIGT:</strong> Höj även telefonens eller datorns fysiska volym och slå av ljudlöst läge. Ratten här är en visuell effekt – den kan inte styra enhetens volym.</p>
+      <button class="cta" id="start">JAG ÄR REDO</button>
+      <div class="tiny">30 SECONDS · NO EXCUSES · FULL VOLUME</div>
+    </section>
+
+    <section class="ending" id="ending">
+      <div class="eyebrow" style="margin-bottom:18px">THE COUNTDOWN IS OVER</div>
+      <div class="ticket">
+        <div class="see">SEE YOU <span>IN HELL</span></div>
+        <div class="rule"></div>
+        <div class="venue">PUSTERVIK</div>
+        <div class="city">GÖTEBORG · SWEDEN</div>
+        <div class="date">THURSDAY 19 NOVEMBER 2026</div>
+        <div class="time">DOORS 19:00&nbsp;&nbsp; · &nbsp;&nbsp;ON STAGE 20:00</div>
+        <div class="rule"></div>
+        <div class="eyebrow">ON THURSDAY NIGHT</div>
+        <div class="barcode"></div>
+      </div>
+      <button class="replay" id="replay">↻ PLAY AGAIN</button>
+    </section>
+    <a class="yt-fallback" id="ytFallback" href="https://www.youtube.com/watch?v=W7a8imST4rQ" target="_blank" rel="noopener">OM MUSIKEN INTE STARTAR – ÖPPNA PÅ YOUTUBE</a>
+    <div class="vignette"></div><div class="grain"></div>
+  </main>
+  <script>
+    const intro = document.getElementById('intro');
+    const trailer = document.getElementById('trailer');
+    const ending = document.getElementById('ending');
+    const volume = document.getElementById('volume');
+    const dial = document.getElementById('dial');
+    const volvalue = document.getElementById('volvalue');
+    const headline = document.getElementById('headline');
+    const track = document.getElementById('track');
+    const stamp = document.getElementById('stamp');
+    const scene = document.getElementById('scene');
+    const bar = document.getElementById('bar');
+    const fallback = document.getElementById('ytFallback');
+
+    volume.addEventListener('input', () => {
+      const v = Number(volume.value);
+      dial.style.transform = `rotate(${-135 + v * 27}deg)`;
+      volvalue.textContent = `${v} / 10`;
+    });
+    volume.dispatchEvent(new Event('input'));
+
+    let player = null, playerReady = false, started = false, timers = [];
+    const songs = [
+      {id:'W7a8imST4rQ', start:0, title:"DREAMIN' IN A CASKET"},
+      {id:'XKOlAYP5ENs', start:0, title:'SOMEONE SPECIAL'},
+      {id:'CefMWNehWes', start:0, title:"WE DON'T CELEBRATE SUNDAYS"}
+    ];
+    function loadYouTubeApi() {
+      if (window.YT && window.YT.Player) { createPlayer(); return; }
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+    window.onYouTubeIframeAPIReady = createPlayer;
+    function createPlayer() {
+      if (player) return;
+      player = new YT.Player('player', {
+        width:'100%', height:'100%', videoId:songs[0].id,
+        playerVars:{autoplay:0,controls:0,disablekb:1,fs:0,rel:0,playsinline:1,iv_load_policy:3,modestbranding:1},
+        events:{
+          onReady:() => { playerReady=true; },
+          onError:() => fallback.classList.add('show')
+        }
+      });
+    }
+    loadYouTubeApi();
+
+    function schedule(fn, ms) { timers.push(setTimeout(fn, ms)); }
+    function clearTimers() { timers.forEach(clearTimeout); timers=[]; }
+    function changeScene(n) {
+      const data = [
+        {h:'TURN IT<br><em>UP.</em>', t:"DREAMIN' IN A CASKET", s:'THE NIGHT IS OURS', stamp:'ONE NIGHT ONLY'},
+        {h:'SOMEONE<br><em>SPECIAL.</em>', t:'SOMEONE SPECIAL', s:'MAKE SOME NOISE', stamp:'NO TURNING BACK'},
+        {h:'WE DON’T<br><em>CELEBRATE.</em>', t:"WE DON'T CELEBRATE SUNDAYS", s:'NO SUNDAY. NO MERCY.', stamp:'THIS IS THE NIGHT'}
+      ][n];
+      headline.innerHTML=data.h; track.textContent=data.t; scene.textContent=data.s; stamp.textContent=data.stamp;
+    }
+    function runTrailer() {
+      if (!playerReady || started) return;
+      started=true; clearTimers();
+      intro.style.opacity='0'; intro.style.transform='scale(.96)';
+      setTimeout(()=>{ intro.style.display='none'; trailer.classList.add('active'); },350);
+      fallback.classList.add('show');
+      try { player.loadVideoById({videoId:songs[0].id,startSeconds:0,suggestedQuality:'large'}); player.playVideo(); }
+      catch(e) { fallback.classList.add('show'); }
+      changeScene(0);
+      schedule(()=>{ changeScene(1); try{player.loadVideoById({videoId:songs[1].id,startSeconds:0,suggestedQuality:'large'});player.playVideo();}catch(e){} },8500);
+      schedule(()=>{ changeScene(2); try{player.loadVideoById({videoId:songs[2].id,startSeconds:0,suggestedQuality:'large'});player.playVideo();}catch(e){} },18000);
+      const startTime=Date.now();
+      const tick=()=>{ const elapsed=Date.now()-startTime; bar.style.width=Math.min(100,elapsed/30000*100)+'%'; if(elapsed<30000) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+      schedule(()=>{ trailer.classList.remove('active'); ending.classList.add('active'); fallback.classList.remove('show'); try{player.pauseVideo();}catch(e){} },30000);
+    }
+    document.getElementById('start').addEventListener('click',()=>{
+      if(playerReady) runTrailer();
+      else {
+        document.getElementById('start').textContent='LADDAR MUSIKEN…';
+        let attempts=0;
+        const wait=setInterval(()=>{ attempts++; if(playerReady){clearInterval(wait);document.getElementById('start').textContent='JAG ÄR REDO';runTrailer();} else if(attempts>25){clearInterval(wait);fallback.classList.add('show');document.getElementById('start').textContent='FÖRSÖK IGEN';} },200);
+      }
+    });
+    document.getElementById('replay').addEventListener('click',()=>{
+      clearTimers(); started=false; ending.classList.remove('active'); intro.style.display='flex'; intro.style.opacity='1'; intro.style.transform='scale(1)'; trailer.classList.remove('active'); bar.style.width='0%'; fallback.classList.remove('show'); document.getElementById('start').textContent='JAG ÄR REDO';
+    });
+  </script>
+</body>
+</html>
